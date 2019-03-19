@@ -5,4 +5,4 @@ const { port } = require('./env');
 
 app.listen(port, () => {
     console.log(`Esta en el puerto ${port}`)
-})
+});
