@@ -8,6 +8,8 @@ route.get('/usuario', user.index);
 
 route.post('/usuario', user.create)
 
-route.put('/usuario/:id', user.update, )
+route.put('/usuario/:id', user.update)
+
+route.delete('/usuario/:id', user.delete);
 
 module.exports = route;

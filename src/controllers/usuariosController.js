@@ -6,12 +6,21 @@ const _ = require('underscore');
 ctr.index = (req, res) => {
     let desde = Number(req.query.desde) || 0;
     let hasta = Number(req.query.hasta) || 5.
+    let estado = req.query.estado || null
 
-    User.find({})
+    User.find({ estado }, 'nombre email role estado google imagen')
         .skip(desde)
         .limit(hasta)
         .exec()
-        .then((response) => res.status(200).json(response))
+        .then(async(response) => {
+
+            let conteo = await User.countDocuments();
+
+            res.status(200).json({
+                conteo,
+                response
+            })
+        })
         .catch(err => res.status(400).json({
             message: 'No existe error'
         }));
@@ -37,20 +46,39 @@ ctr.create = (req, res) => {
 }
 
 ctr.update = (req, res) => {
-    let user;
+    var user;
     const id = req.params.id;
     const body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
-    User.findOneAndUpdate(id, body, {
+    User.findOneAndUpdate({ _id: id }, body, {
             new: true,
             runValidators: true,
             context: 'query'
         })
-        .then(response => {
-            user = response
-            res.status(200).json({ user });
+        .then((response) => {
+            user = response;
+            res.status(200).json({
+                user,
+            });
+
         }).catch(err => {
             res.status(400).json(err);
         })
+}
+
+ctr.delete = (req, res) => {
+    let id = req.params.id;
+    body = {
+        estado: false,
+    }
+
+    User.findOneAndUpdate({ _id: id }, body, {
+        runValidators: true,
+        context: 'query',
+    }).then(userioRes => {
+        res.status(200).json({
+            userioRes
+        })
+    }).catch(() => res.status(400).json({ ok: false }))
 }
 
 module.exports = ctr;
