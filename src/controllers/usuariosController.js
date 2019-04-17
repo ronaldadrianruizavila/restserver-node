@@ -6,7 +6,7 @@ const _ = require('underscore');
 ctr.index = (req, res) => {
     let desde = Number(req.query.desde) || 0;
     let hasta = Number(req.query.hasta) || 5.
-    let estado = req.query.estado || null
+    let estado = req.query.estado || true
 
     User.find({ estado }, 'nombre email role estado google imagen')
         .skip(desde)
