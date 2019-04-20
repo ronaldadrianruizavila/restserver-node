@@ -1,6 +1,7 @@
 const route = require('../routes/api');
 const express = require('express');
 const morgan = require('morgan');
+const login = require('../routes/login')
 
 module.exports = app => {
 
@@ -11,6 +12,7 @@ module.exports = app => {
 
     //routes
     app.use(route);
+    app.use(login);
 
     return app;
 }

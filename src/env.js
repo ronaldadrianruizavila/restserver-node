@@ -6,7 +6,9 @@ var env = {
             return 'mongodb+srv://admin:2ZVI9XKboriqsc81@cluster0-d0edu.mongodb.net/cafe?retryWrites=true'
         }
         return 'mongodb://localhost:27017/cafe' 
-    }
+    },
+    exp:60*60,
+    secret:'s-e-c-r-e-t'
 }
 
 module.exports = env;
