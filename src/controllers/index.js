@@ -1,4 +1,6 @@
 module.exports = {
     user: require('./usuariosController'),
-    login:require('./loginController')
+    login:require('./loginController'),
+    category: require('./categoriaController'),
+    product: require('./productoController')
 }

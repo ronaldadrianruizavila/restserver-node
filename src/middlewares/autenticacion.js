@@ -29,9 +29,13 @@ let verificacion = (req, res, next) => {
 
 let verficaAdminRole = (req,res,next)=>{
     let user = req.user;
-
+    console.log(user);
     if(user.role == 'ADMIN_ROLE'){
         next()
+    }else{
+        res.json({
+            message:'No tiene permisos de administrador'
+        })
     }
 
 }
