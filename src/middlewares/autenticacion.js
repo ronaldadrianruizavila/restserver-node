@@ -27,6 +27,37 @@ let verificacion = (req, res, next) => {
     )
 }
 
+let verificacionUrl = (req, res, next) => {
+    let {toquen} = req.query;
+
+    if(!toquen){
+        return res.status(400).json({
+            ok:false,
+            err:{
+                message:'toquen es necesario'
+            }
+        })
+    }
+
+    if(toquen){
+        jwt.verify(toquen,secret,(err,decoded)=>{
+            if(err){
+                return res.status(400).json({
+                    ok:false,
+                    err:{
+                        message:'toquen es invalido'
+                    }
+                })
+            }
+            if(decoded){
+                req.user = decoded.user;
+                next()
+            }
+        })
+    }
+
+}
+
 let verficaAdminRole = (req,res,next)=>{
     let user = req.user;
     console.log(user);
@@ -42,5 +73,6 @@ let verficaAdminRole = (req,res,next)=>{
 
 module.exports = {
     verificacion,
-    verficaAdminRole
+    verficaAdminRole,
+    verificacionUrl
 }

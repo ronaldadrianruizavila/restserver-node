@@ -1,7 +1,7 @@
 const express = require('express');
 const route = express.Router();
-const { user,category,product } = require('../controllers')
-const {verificacion, verficaAdminRole} =  require('../middlewares/autenticacion');
+const { user,category,product,file } = require('../controllers')
+const {verificacion, verficaAdminRole,verificacionUrl} =  require('../middlewares/autenticacion');
 
 route.get('/usuario',verificacion, user.index);
 
@@ -25,5 +25,9 @@ route.delete('/producto/:id',[verificacion],product.delete);
 route.post('/producto',[verificacion],product.store);
 
 route.get('/producto/search/:termino',[verificacion],product.search);
+
+route.put('/upload/:tipo/:id',file.upload)
+
+route.get('/imagen/:tipo/:img',verificacionUrl,file.show)
 
 module.exports = route;
